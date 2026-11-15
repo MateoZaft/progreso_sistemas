@@ -3,7 +3,7 @@ let PLAN = null;
 let state = { statuses: {} };
 
 async function loadPlan() {
-  const res = await fetch('./data/plan.json')
+  const res = await fetch('data/plan.json');
   PLAN = await res.json();
   // init statuses
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -238,13 +238,25 @@ function statusBadge(code){
   return `<span class="status" style="background:${STATUS_COLOR[st]}">${STATUS_LABEL[st]}</span>`;
 }
 
+var expandedYears = new Set([1]);
+function toggleYear(y) {
+  if (expandedYears.has(y)) expandedYears.delete(y); else expandedYears.add(y);
+  renderPlan();
+}
 function renderPlan() {
   const container = document.getElementById('planContainer');
-  // group by year
   const years = [1,2,3,4,5];
   container.innerHTML = years.map(y => {
     const subs = PLAN.subjects.filter(s=>s.year===y);
-    return `<div class="year-block"><h3>${y}° Año</h3><div class="cards">${subs.map(s => subjectCard(s)).join('')}</div></div>`;
+    const ap = subs.filter(s=>statusOf(s.code)==='aprobada').length;
+    const open = expandedYears.has(y);
+    return `<div class="year-block">
+      <div class="year-head" onclick="toggleYear(${y})" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:${open?'10px':'0'};">
+        <span style="font-weight:700;font-size:1.05rem;">${y}° Año</span>
+        <span style="color:var(--muted);font-size:0.85rem;">${ap}/${subs.length} aprobadas · ${open?'▲':'▼'}</span>
+      </div>
+      ${open ? `<div class="cards">${subs.map(s => subjectCard(s)).join('')}</div>` : ''}
+    </div>`;
   }).join('');
 }
 
@@ -401,9 +413,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('resetBtn').addEventListener('click', resetState);
   // theme toggle
   const themeBtn = document.getElementById('themeBtn');
+  function updateThemeIcon() {
+    const light = document.body.classList.contains('light');
+    themeBtn.textContent = light ? '☀️' : '🌙';
+  }
   themeBtn.addEventListener('click', () => {
     document.body.classList.toggle('light');
     localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark');
+    updateThemeIcon();
   });
   if (localStorage.getItem('theme')==='light') document.body.classList.add('light');
+  updateThemeIcon();
 });
