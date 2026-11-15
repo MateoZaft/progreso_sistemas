@@ -174,7 +174,7 @@ function renderNextYear() {
     else if (canNext) tag = '<span class="status" style="background:#8b5cf6">Disponible el año que viene</span>';
     else tag = '<span class="status" style="background:#6b7280">Bloqueada</span>';
     return `<div class="row">
-      <div class="row-main"><span class="code">${s.code}</span> ${s.name} <small>${s.term} · ${s.hours} hs</small></div>
+      <div class="row-main">${s.name} <small>${s.term} · ${s.hours} hs</small></div>
       <div class="row-actions">${tag}</div>
     </div>`;
   }).join('');
@@ -216,11 +216,11 @@ function renderDashboard() {
     .sort((a,b) => priorityScore(b.code)-priorityScore(a.code) || immediateUnlocks(b.code)-immediateUnlocks(a.code) || a.year-b.year)
     .slice(0,5);
   const ul = document.getElementById('topPrio');
-  ul.innerHTML = top.length ? top.map(s => `<li><span class="badge" style="background:${STATUS_COLOR.pendiente}">${s.code}</span> ${s.name} <small>— desbloquea ${immediateUnlocks(s.code)} materia(s) ahora y ${transitiveDependents(s.code).size} en total; troncalidad ${troncalScore(s.code)}</small></li>`).join('') : '<li>Sin materias disponibles por ahora.</li>';
+  ul.innerHTML = top.length ? top.map(s => `<li>${s.name} <small>— desbloquea ${immediateUnlocks(s.code)} materia(s) ahora y ${transitiveDependents(s.code).size} en total; troncalidad ${troncalScore(s.code)}</small></li>`).join('') : '<li>Sin materias disponibles por ahora.</li>';
   // finals to take
   const finals = PLAN.subjects.filter(s => canTakeFinal(s));
   const fu = document.getElementById('finalsList');
-  fu.innerHTML = finals.length ? finals.map(s=>`<li><span class="badge" style="background:${STATUS_COLOR.regular}">${s.code}</span> ${s.name}</li>`).join('') : '<li>Ninguna materia regular pendiente de final.</li>';
+  fu.innerHTML = finals.length ? finals.map(s=>`<li>${s.name}</li>`).join('') : '<li>Ninguna materia regular pendiente de final.</li>';
   // best path
   const bp = document.getElementById('bestPath');
   if (bp) {
@@ -228,7 +228,7 @@ function renderDashboard() {
       .filter(s => statusOf(s.code)==='pendiente' && isAvailable(s))
       .sort((a,b) => priorityScore(b.code)-priorityScore(a.code) || a.year-b.year)
       .slice(0,6);
-    bp.innerHTML = path.length ? path.map((s,i) => `<li><b>${s.code} - ${s.name}</b> <small>(desbloquea ${immediateUnlocks(s.code)} ahora / ${transitiveDependents(s.code).size} en total)</small></li>`).join('') : '<li>Sin materias disponibles.</li>';
+    bp.innerHTML = path.length ? path.map((s,i) => `<li><b>${s.name}</b> <small>(desbloquea ${immediateUnlocks(s.code)} ahora / ${transitiveDependents(s.code).size} en total)</small></li>`).join('') : '<li>Sin materias disponibles.</li>';
   }
   renderNextYear();
 }
@@ -266,7 +266,6 @@ function subjectCard(s) {
   const troncal = deps >= 3 ? '🔥 Troncal' : (deps>=1?'⭐':'');
   return `<div class="card ${st}" data-code="${s.code}">
     <div class="card-head">
-      <span class="code">${s.code}</span>
       ${statusBadge(s.code)}
     </div>
     <div class="name">${s.name}</div>
@@ -300,7 +299,7 @@ function renderAvailable() {
   el.innerHTML = avail.length ? avail.map(s => `
     <div class="row">
       <div class="row-main">
-        <span class="code">${s.code}</span> ${s.name}
+        ${s.name}
         <small>(${s.year}° año, ${s.term}) · troncalidad ${troncalScore(s.code)}</small>
       </div>
       <div class="row-actions">
@@ -314,7 +313,7 @@ function renderAvailable() {
   const rel = document.getElementById('retakeList');
   rel.innerHTML = rec.length ? rec.map(s=>`
     <div class="row">
-      <div class="row-main"><span class="code">${s.code}</span> ${s.name} <small>troncalidad ${troncalScore(s.code)}</small></div>
+      <div class="row-main">${s.name} <small>troncalidad ${troncalScore(s.code)}</small></div>
       <div class="row-actions">
         <button onclick="setStatus('${s.code}','regular')">Volver a regular</button>
         <button onclick="setStatus('${s.code}','aprobada')">Marcar aprobada</button>
@@ -328,7 +327,7 @@ function renderAvailable() {
     const missingReg = s.regularReqs.filter(c => !['regular','aprobada'].includes(statusOf(c)));
     const missingApp = s.approvedReqs.filter(c => statusOf(c)!=='aprobada');
     return `<div class="row blocked">
-      <div class="row-main"><span class="code">${s.code}</span> ${s.name}
+      <div class="row-main">${s.name}
         <small>Faltan regulares: ${missingReg.map(codeToName).join(', ')||'-'} · Faltan aprobadas: ${missingApp.map(codeToName).join(', ')||'-'}</small>
       </div>
     </div>`;
@@ -339,7 +338,7 @@ function renderRecursadas() {
   const rec = PLAN.subjects.filter(s=>statusOf(s.code)==='recursada');
   const el = document.getElementById('recursadasContainer');
   el.innerHTML = rec.length ? rec.map(s => `<div class="card recursada">
-    <div class="card-head"><span class="code">${s.code}</span><span class="status" style="background:${STATUS_COLOR.recursada}">Recursada</span></div>
+    <div class="card-head"><span class="status" style="background:${STATUS_COLOR.recursada}">Recursada</span></div>
     <div class="name">${s.name}</div>
     <div class="meta">${s.year}° año · troncalidad ${troncalScore(s.code)} · dependientes: ${dependentsOf(s.code)}</div>
     <div class="actions">
@@ -367,7 +366,7 @@ function renderStats() {
     .sort((a,b)=>b.d-a.d)
     .slice(0,10);
   const tel = document.getElementById('troncalesList');
-  tel.innerHTML = troncales.map(x=>`<li><span class="code">${x.s.code}</span> ${x.s.name} — ${x.d} materias dependen de ella</li>`).join('');
+  tel.innerHTML = troncales.map(x=>`<li>${x.s.name} — ${x.d} materias dependen de ella</li>`).join('');
 }
 
 // export/import

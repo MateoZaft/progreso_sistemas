@@ -31,13 +31,10 @@
     <div class="pctBig" id="pctHoursText" style="font-size:1.6rem;">0%</div>
     <div class="progress"><div class="fill" id="pctHoursBar" style="width:0%;background:linear-gradient(90deg,#f59e0b,#ef4444)">0%</div></div>
     <p style="text-align:center;color:var(--muted);margin:4px 0 12px;">Por horas (aprobadas / total)</p>
-    <div class="section" style="margin-top:10px;">
-      <h2>📈 Promedios</h2>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="num" id="avgAprob">0%</div><div class="lbl">Solo aprobadas</div></div>
-        <div class="stat-card"><div class="num" id="avgReg">0%</div><div class="lbl">Solo regulares</div></div>
-        <div class="stat-card"><div class="num" id="avgComb">0%</div><div class="lbl">Combinado (aprobadas + ½ regulares)</div></div>
-      </div>
+    <div class="promedios">
+      <div class="promedio"><span class="prom-val" id="avgAprob">0%</span><span class="prom-lbl">Aprobadas</span></div>
+      <div class="promedio"><span class="prom-val" id="avgReg">0%</span><span class="prom-lbl">Regulares</span></div>
+      <div class="promedio"><span class="prom-val" id="avgComb">0%</span><span class="prom-lbl">Combinado</span></div>
     </div>
     <div class="stats-grid">
       <div class="stat-card"><div class="num" id="cntAprob">0</div><div class="lbl">Aprobadas</div></div>
@@ -105,6 +102,6 @@
     </div>
   </div>
 </div>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body>
 </html>

@@ -33,6 +33,10 @@ button.secondary { background: var(--bg2); border:1px solid var(--border); color
 .pctBig { font-size:2.4rem; font-weight:900; text-align:center; margin:8px 0; letter-spacing:-0.02em; background: linear-gradient(135deg, var(--accent), var(--good)); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .progress { background: var(--bg2); border-radius:999px; height:24px; overflow:hidden; border:1px solid var(--border); margin:8px 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); }
 .progress .fill { height:100%; background: linear-gradient(90deg,#22c55e,#4f8cff); transition: width .5s cubic-bezier(.4,0,.2,1); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:0.78rem; text-shadow:0 1px 2px rgba(0,0,0,0.3); }
+.promedios { display:flex; gap:8px; margin:10px 0 14px; }
+.promedio { flex:1; background: var(--bg2); border:1px solid var(--border); border-radius:12px; padding:8px 6px; text-align:center; display:flex; flex-direction:column; gap:2px; }
+.prom-val { font-size:1.05rem; font-weight:800; color: var(--accent); }
+.prom-lbl { font-size:0.68rem; color: var(--muted); font-weight:500; }
 
 .stats-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; margin:12px 0; }
 .stat-card { background: var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 10px; text-align:center; box-shadow: var(--shadow); transition: transform .15s; }
