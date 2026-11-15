@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrera Sistemas - Tracker</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎓 Carrera de Sistemas - Tracker</h1>
+    <div class="header-actions">
+      <button id="themeBtn" class="secondary">Tema</button>
+      <button id="exportBtn" class="secondary">Exportar progreso</button>
+      <label class="secondary" style="padding:8px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);">
+        Importar <input type="file" id="importFile" accept="application/json" style="display:none;">
+      </label>
+      <button id="resetBtn" class="secondary">Resetear</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tabbtn active" data-tab="dashboard">Dashboard</button>
+    <button class="tabbtn" data-tab="plan">Plan de estudios</button>
+    <button class="tabbtn" data-tab="disponibles">Disponibles</button>
+    <button class="tabbtn" data-tab="recursadas">Recursadas</button>
+    <button class="tabbtn" data-tab="stats">Estadísticas</button>
+  </div>
+
+  <div id="tab-dashboard" class="tab active">
+    <div class="pctBig" id="pctText">0%</div>
+    <div class="progress"><div class="fill" id="pctBar" style="width:0%">0%</div></div>
+    <p style="text-align:center;color:var(--muted);margin:4px 0 12px;">Por materias aprobadas</p>
+    <div class="pctBig" id="pctHoursText" style="font-size:1.6rem;">0%</div>
+    <div class="progress"><div class="fill" id="pctHoursBar" style="width:0%;background:linear-gradient(90deg,#f59e0b,#ef4444)">0%</div></div>
+    <p style="text-align:center;color:var(--muted);margin:4px 0 12px;">Por horas (aprobadas / total)</p>
+    <div class="section" style="margin-top:10px;">
+      <h2>📈 Promedios</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="num" id="avgAprob">0%</div><div class="lbl">Solo aprobadas</div></div>
+        <div class="stat-card"><div class="num" id="avgReg">0%</div><div class="lbl">Solo regulares</div></div>
+        <div class="stat-card"><div class="num" id="avgComb">0%</div><div class="lbl">Combinado (aprobadas + ½ regulares)</div></div>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="num" id="cntAprob">0</div><div class="lbl">Aprobadas</div></div>
+      <div class="stat-card"><div class="num" id="cntReg">0</div><div class="lbl">Regulares</div></div>
+      <div class="stat-card"><div class="num" id="cntRec">0</div><div class="lbl">Recursadas</div></div>
+      <div class="stat-card"><div class="num" id="cntPend">0</div><div class="lbl">Pendientes</div></div>
+      <div class="stat-card"><div class="num" id="cntDisp">0</div><div class="lbl">Disponibles</div></div>
+      <div class="stat-card"><div class="num" id="cntTotal">0</div><div class="lbl">Total</div></div>
+    </div>
+    <div class="section">
+      <h2>📅 Materias que puedo cursar el año que viene</h2>
+      <div id="nextYearList"></div>
+    </div>
+    <div class="two-col">
+      <div class="section">
+        <h2>🎯 Materias que deberías priorizar (más troncales)</h2>
+        <ul id="topPrio"></ul>
+      </div>
+      <div class="section">
+        <h2>📝 Pueden rendir final</h2>
+        <ul id="finalsList"></ul>
+      </div>
+    </div>
+    <div class="section">
+      <h2>🧭 Mejor camino a seguir (orden sugerido)</h2>
+      <ol id="bestPath"></ol>
+    </div>
+    <div class="section">
+      <h2>ℹ️ Cómo usar</h2>
+      <p>En cada materia usá "Cambiar estado" para ciclar: Pendiente → Regular → Aprobada → Recursada. Las materias disponibles se calculan según correlatividades (regulares y aprobadas). La troncalidad indica cuántas materias dependen de ella.</p>
+    </div>
+  </div>
+
+  <div id="tab-plan" class="tab">
+    <div id="planContainer"></div>
+  </div>
+
+  <div id="tab-disponibles" class="tab">
+    <div class="section">
+      <h2>✅ Materias disponibles para cursar</h2>
+      <div id="availList"></div>
+    </div>
+    <div class="section">
+      <h2>🔁 Materias recursadas (retomar)</h2>
+      <div id="retakeList"></div>
+    </div>
+    <div class="section">
+      <h2>🔒 Bloqueadas (faltan correlativas)</h2>
+      <div id="blockedList"></div>
+    </div>
+  </div>
+
+  <div id="tab-recursadas" class="tab">
+    <div id="recursadasContainer"></div>
+  </div>
+
+  <div id="tab-stats" class="tab">
+    <div class="section">
+      <h2>📊 Avance por año</h2>
+      <div id="statsByYear"></div>
+    </div>
+    <div class="section">
+      <h2>🔥 Materias más troncales</h2>
+      <ul id="troncalesList"></ul>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
