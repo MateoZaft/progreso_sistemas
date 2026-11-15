@@ -186,7 +186,10 @@ function renderDashboard() {
   const total = PLAN.subjects.length;
   const pct = (c.aprobada/total*100).toFixed(1);
   document.getElementById('pctText').textContent = pct + '%';
-  document.getElementById('pctBar').style.width = pct + '%';
+  const pBar = document.getElementById('pctBar');
+  pBar.style.width = pct + '%';
+  const pLabel = document.getElementById('pctBarLabel');
+  if (pLabel) pLabel.textContent = pct + '%';
   document.getElementById('cntAprob').textContent = c.aprobada;
   document.getElementById('cntReg').textContent = c.regular;
   document.getElementById('cntRec').textContent = c.recursada;
@@ -208,7 +211,9 @@ function renderDashboard() {
   const hpct = th ? (ah/th*100).toFixed(1) : '0.0';
   const hBar = document.getElementById('pctHoursBar');
   const hText = document.getElementById('pctHoursText');
-  if (hBar) { hBar.style.width = hpct + '%'; hBar.textContent = hpct + '%'; }
+  if (hBar) { hBar.style.width = hpct + '%'; }
+  const hLabel = document.getElementById('pctHoursBarLabel');
+  if (hLabel) hLabel.textContent = hpct + '%';
   if (hText) hText.textContent = hpct + '%';
   // top priorities
   const top = PLAN.subjects

@@ -3,20 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Carrera Sistemas - Tracker</title>
-<meta name="description" content="Seguimiento de la carrera de Ingeniería en Sistemas de Información. Consultá materias aprobadas, regulares, correlatividades y estadísticas de avance.">
-
-<!-- Vista previa al compartir -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Carrera de Sistemas | Mi progreso académico">
-<meta property="og:description" content="Seguimiento de Ingeniería en Sistemas de Información. Visualizá tu avance, materias aprobadas, correlatividades y estadísticas de la carrera.">
-<meta property="og:url" content="https://mateozaft.github.io/progreso_sistemas/">
-<meta property="og:image" content="https://mateozaft.github.io/progreso_sistemas/assets/portada.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Carrera de Sistemas - Mi progreso académico">
-
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -39,10 +26,10 @@
 
   <div id="tab-dashboard" class="tab active">
     <div class="pctBig" id="pctText">0%</div>
-    <div class="progress"><div class="fill" id="pctBar" style="width:0%">0%</div></div>
+    <div class="progress"><div class="fill" id="pctBar" style="width:0%"></div><span class="pctLabel" id="pctBarLabel">0%</span></div>
     <p style="text-align:center;color:var(--muted);margin:4px 0 12px;">Por materias aprobadas</p>
     <div class="pctBig" id="pctHoursText" style="font-size:1.6rem;">0%</div>
-    <div class="progress"><div class="fill" id="pctHoursBar" style="width:0%;background:linear-gradient(90deg,#f59e0b,#ef4444)">0%</div></div>
+    <div class="progress"><div class="fill" id="pctHoursBar" style="width:0%;background:linear-gradient(90deg,#f59e0b,#ef4444)"></div><span class="pctLabel" id="pctHoursBarLabel">0%</span></div>
     <p style="text-align:center;color:var(--muted);margin:4px 0 12px;">Por horas (aprobadas / total)</p>
     <div class="promedios">
       <div class="promedio"><span class="prom-val" id="avgAprob">0%</span><span class="prom-lbl">Aprobadas</span></div>
@@ -115,6 +102,6 @@
     </div>
   </div>
 </div>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>
