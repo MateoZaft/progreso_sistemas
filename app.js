@@ -408,8 +408,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadPlan();
   renderAll();
   document.querySelectorAll('.tabbtn').forEach(b => b.addEventListener('click', ()=>showTab(b.dataset.tab)));
-  document.getElementById('exportBtn').addEventListener('click', exportState);
-  document.getElementById('importFile').addEventListener('change', e => { if(e.target.files[0]) importState(e.target.files[0]); });
+
   document.getElementById('resetBtn').addEventListener('click', resetState);
   // theme toggle
   const themeBtn = document.getElementById('themeBtn');
