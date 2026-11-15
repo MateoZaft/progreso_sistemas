@@ -3,7 +3,7 @@ let PLAN = null;
 let state = { statuses: {} };
 
 async function loadPlan() {
-  const res = await fetch('./plan.json')
+  const res = await fetch('./data/plan.json')
   PLAN = await res.json();
   // init statuses
   const saved = localStorage.getItem(STORAGE_KEY);
